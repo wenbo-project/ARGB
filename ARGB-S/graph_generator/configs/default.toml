@@ -1,0 +1,17 @@
+[generator]
+node_types = ["GPU", "CPU"]
+gpu_ratio = 0.5
+
+[generator.topology]
+layer_count = { mean = 40, variance = 0, minimum = 2, maximum = 200 }
+out_degree = { mean = 0.7, variance = 16, minimum = 0, maximum = 10 }
+first_layer_width = { mean = 1, variance = 0, minimum = 1, maximum = 50 }
+max_layer_jump = 1  # maximum number of levels by which a parent node and a child node can differ
+max_layer_width = 100
+max_total_nodes = 100000
+force_converge = true  # If enabled, all nodes will converge together
+
+[generator.resources]
+cpu_time_ms = { mean = 1, variance = 0, minimum = 1 }
+gpu_time_ms = { mean = 1, variance = 0, minimum = 1 }
+gpu_token_count = { mean = 1, variance = 0, minimum = 1 }

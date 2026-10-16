@@ -1,0 +1,27 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "graph-generator"
+version = "0.1.0"
+description = "A configurable synthetic layered graph generator."
+requires-python = ">=3.10"
+dependencies = ["tomli>=2.0; python_version < \"3.11\""]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8",
+]
+
+[tool.setuptools.packages.find]
+include = ["graph_generator*"]
+
+[tool.setuptools.package-data]
+graph_generator = ["configs/*.toml"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.basedpyright]
+pythonVersion = "3.11"

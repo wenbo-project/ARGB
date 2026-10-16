@@ -1,0 +1,15 @@
+# A tree with constant out-degree.
+
+[generator.topology]
+layer_count = { mean = 5, variance = 0, minimum = 2 }
+out_degree = { mean = 3.0, variance = 0.0, minimum = 1, maximum = 3 }
+max_layer_jump = 1    # maximum number of levels by which a parent node and a child node can differ
+first_layer_width = { mean = 1, variance = 0, minimum = 1, maximum = 10 }
+max_layer_width = 10000
+max_total_nodes = 100000
+force_converge = false  # If disabled, then nodes will not converge
+
+[generator.resources]
+cpu_time_ms = { mean = 1, variance = 0, minimum = 1 }
+gpu_time_ms = { mean = 1, variance = 0, minimum = 1 }
+gpu_token_count = { mean = 1, variance = 0, minimum = 1 }

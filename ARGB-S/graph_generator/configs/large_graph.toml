@@ -1,0 +1,15 @@
+# wider and deeper, with more level skipping
+[generator]
+
+[generator.topology]
+layer_count = { mean = 24, variance = 4, minimum = 2 }
+out_degree = { mean = 3.0, variance = 1.0, minimum = 0, maximum = 8 }
+max_layer_jump = 3    # maximum number of levels by which a parent node and a child node can differ
+first_layer_width = { mean = 1, variance = 0, minimum = 1, maximum = 10 }
+max_layer_width = 60
+max_total_nodes = 100000
+
+[generator.resources]
+cpu_time_ms = { mean = 1, variance = 0, minimum = 1 }
+gpu_time_ms = { mean = 1, variance = 0, minimum = 1 }
+gpu_token_count = { mean = 1, variance = 0, minimum = 1 }

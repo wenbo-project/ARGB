@@ -1,21 +1,35 @@
-# graph_generator
+# ARGB
 
-A configurable Python library for generating **synthetic layered dependency graphs** for task dependency and scheduling experiments. Nodes represent CPU or GPU tasks with sampled execution times; GPU nodes also carry token counts. Edges represent task dependencies.Reasoning graphs are not inherently subject to an acyclicity constraint. To simplify the experimental setup, we generate executable directed acyclic graphs (DAGs) as experimental instances.
+ARGB comprises two datasets for studying heterogeneous agent reasoning workloads and CPU/GPU scheduling: **ARGB-S**, a synthetic dataset with configurable graph structures and resource loads, and **ARGB-R**, a dataset derived from public agent reasoning tasks.
 
-Generate one graph or a batch, export JSON datasets, and inspect the graphs in a standalone HTML visualization. Graph shape and resource load distributions are configured through TOML files.
+Reasoning graphs are not inherently subject to an acyclicity constraint. To simplify the experimental setup, we generate executable directed acyclic graphs (DAGs) as experimental instances.
 
-## Quick start
+## Repository structure
+
+```text
+.
+├── ARGB-S/
+├── ARGB-R/
+└── README.md
+```
+
+`ARGB-S/` contains the synthetic dataset generator, configurations, examples, tests, and detailed documentation. `ARGB-R/` contains the real-task-derived dataset and its associated construction resources. This root README provides the overview and usage instructions for both components.
+
+## ARGB-S: Synthetic Dataset
+
+ARGB-S generates synthetic layered dependency graphs using the `graph_generator` Python package. Nodes represent CPU or GPU operations with sampled execution times; GPU nodes also carry token counts. Directed edges represent dependencies between operations. TOML configuration controls graph shape, CPU/GPU sampling probabilities, and resource load distributions.
+
+### Quick start
 
 Requires **Python 3.10 or later**. From the repository root:
 
 ```sh
+cd ARGB-S
 python -m pip install -e .
 python examples/example.py
 ```
 
-The example writes JSON and HTML files to `outputs/example_outputs/`. Open `outputs/example_outputs/example_graphs.html` to inspect the generated graphs. Run the example script to try the complete generation and export workflow.
-
-## Basic usage
+The example writes JSON and HTML files to `ARGB-S/outputs/example_outputs/`. Open `ARGB-S/outputs/example_outputs/example_graphs.html` to inspect the generated graphs. Paths in the following Python examples are relative to `ARGB-S/` when it is the working directory.
 
 ### Generate a single graph
 
@@ -27,27 +41,6 @@ print(len(graph.nodes()), len(graph.edges()))
 ```
 
 This uses the packaged default configuration. Reuse the same configuration and random seed to reproduce the generated graph.
-
-### Choose a preset and adjust parameters
-
-```python
-from graph_generator import generate_graph, get_config_path
-
-graph = generate_graph(
-    id="custom",
-    config_path=get_config_path("large_graph.toml"),
-    out_degree={"mean": 4},
-    seed=17,
-)
-```
-
-`get_config_path("large_graph.toml")` returns the absolute path of the packaged `graph_generator/configs/large_graph.toml`, independently of the current working directory. This example first loads `default.toml`, then merges the preset, and finally overrides the out-degree mean with `out_degree={"mean": 4}`. Fields that are not overridden retain their existing values. To use your own TOML file, pass its path directly, for example `config_path="my_config.toml"`.
-
-| Preset | Use |
-|---|---|
-| [default.toml](graph_generator/configs/default.toml) | Default settings: 40 requested layers, adjacent-layer edges, one final converge node |
-| [large_graph.toml](graph_generator/configs/large_graph.toml) | Higher out-degree mean and edges spanning up to three layers |
-| [tree.toml](graph_generator/configs/tree.toml) | Five-layer tree with three children per non-terminal node and no forced convergence |
 
 ### Generate a batch, export, and visualize
 
@@ -72,15 +65,47 @@ visualize(
 )
 ```
 
-`load_config()` loads the default generator configuration. TOML files contain `[generator]` settings; batch size, worker count, base seed, and output paths are set in `RunConfig`. Running the example produces:
+`load_config()` loads the default generator configuration. TOML files contain `[generator]` settings; batch size, worker count, base seed, and output paths are set in `RunConfig`. When run from `ARGB-S/`, this batch configuration produces:
 
-- `outputs/generated_graphs.json`: a graph dataset with node layer information and the merged generator configuration.
-- `outputs/generated_graphs_no_layer.json`: the same dataset with node `layer` fields omitted.
-- `outputs/graph_view.html`: a standalone HTML visualization.
+- `ARGB-S/outputs/generated_graphs.json`: a graph dataset with node layer information and the merged generator configuration.
+- `ARGB-S/outputs/generated_graphs_no_layer.json`: the same dataset with node `layer` fields omitted.
+- `ARGB-S/outputs/graph_view.html`: a standalone HTML visualization.
 
 For large batches, use `generate_and_save(run, retain_graphs=False)` to stream the JSON output.
 
+Packaged presets, custom TOML files, parameter overrides, and the `gpu_ratio` setting are covered in the [ARGB-S configuration guide](ARGB-S/docs/configuration.md).
+
+## ARGB-R: Real-Task-Derived Dataset
+
+ARGB-R is derived from four public agent reasoning task datasets, covering factual reasoning, multi-hop evidence reasoning, tool use, and embodied interaction.
+
+### Source datasets
+
+| Dataset | Task domain | Information extracted |
+|---|---|---|
+| [StrategyQA](https://github.com/eladsegal/strategyqa) | Factual reasoning | Questions and supporting facts |
+| [MuSiQue](https://github.com/stonybrooknlp/musique) | Multi-hop evidence reasoning | Questions and evidence passages |
+| [ToolBench / ToolLLM](https://github.com/OpenBMB/ToolBench) | Tool use | Task descriptions, available tools, and invocation traces |
+| [ALFWorld](https://github.com/alfworld/alfworld) | Embodied interaction | Goals, environment descriptions, and action sequences |
+
+### Construction pipeline
+
+1. **Extract task information.** Collect the dataset-specific information listed above and retain the source dataset for each task.
+2. **Construct dependency graphs.** Provide the extracted information to `deepseek-v4-flash` and prompt it to construct a DAG representing the task's reasoning and execution dependencies. Subtasks become operation nodes, and directed edges encode prerequisite relationships.
+3. **Normalize the graphs.** Convert the generated graphs into a unified JSON representation for consistent workload processing and scheduling across task domains.
+
+### Resource assignment and representation
+
+| Operation category | Resource label |
+|---|---|
+| LLM-intensive reasoning, planning, and answer generation | GPU |
+| Tool invocations, environment interactions, and deterministic processing | CPU |
+
+Each normalized graph records its source dataset. Each node contains an identifier, an execution prompt, and a CPU/GPU resource label. Each edge specifies its source and destination node identifiers.
+
+The real-task-derived dataset and its associated construction resources are organized under `ARGB-R/`. The sections above summarize the data sources, construction protocol, and representation.
+
 ## Further documentation
 
-- [Configuration guide](docs/configuration.md): all parameters, sampling rules, and how out-degree, layer jumps, width limits, node budget, and convergence interact.
-- [Technical reference](docs/reference.md): generation steps, JSON format, public API, batch defaults, and streaming export.
+- [ARGB-S configuration guide](ARGB-S/docs/configuration.md): presets, all parameters, sampling rules, and how graph shape controls interact.
+- [ARGB-S technical reference](ARGB-S/docs/reference.md): generation steps, JSON format, public API, batch defaults, and streaming export.

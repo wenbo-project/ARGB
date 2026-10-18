@@ -1,0 +1,16 @@
+{
+  "schema": "wenbo.dag-shards.v1",
+  "dags": 26999,
+  "shards": [
+    {
+      "path": "dags-00001-of-00002.json",
+      "sha256": "02088f16642244218224107ee7df048848520338088188e19e5fdbb38bffaf16",
+      "dags": 13500
+    },
+    {
+      "path": "dags-00002-of-00002.json",
+      "sha256": "f3f3213538dcd9e4ea9beb8d84c0cc242ecfde497c865952010c8579693d2cec",
+      "dags": 13499
+    }
+  ]
+}

@@ -103,9 +103,10 @@ ARGB-R is derived from four public agent reasoning task datasets, covering factu
 
 Each normalized graph records its source dataset. Each node contains an identifier, an execution prompt, and a CPU/GPU resource label. Each edge specifies its source and destination node identifiers.
 
-The real-task-derived dataset and its associated construction resources are organized under `ARGB-R/`. The sections above summarize the data sources, construction protocol, and representation.
+The released graphs and matching resource files are organized under `ARGB-R/`. See the [ARGB-R dataset details](ARGB-R/docs/DETAILS.md) for dataset-specific sources and conversions, release statistics, loading instructions, resource semantics, and file integrity information. Read ToolBench shards in the order listed in `dags.index.json` and keep each graph file with its matching `resources.json`.
 
 ## Further documentation
 
 - [ARGB-S configuration guide](ARGB-S/docs/configuration.md): presets, all parameters, sampling rules, and how graph shape controls interact.
 - [ARGB-S technical reference](ARGB-S/docs/reference.md): generation steps, JSON format, public API, batch defaults, and streaming export.
+- [ARGB-R dataset details](ARGB-R/docs/DETAILS.md): source-specific conversion details, release inventory, data loading, resource semantics, and integrity information.

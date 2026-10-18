@@ -17,7 +17,7 @@ The Agent Reasoning Graph Benchmark (ARGB) combines graphs derived from public a
 
 ```text
 ARGB/
-├── ARGB-R/      # Real-task-derived graphs, conversion tools, and dataset documentation
+├── ARGB-R/      # Real-task-derived graphs, resource files, and dataset documentation
 ├── ARGB-S/      # Synthetic graph generator, configurations, examples, and tests
 ├── README.md
 └── LICENSE

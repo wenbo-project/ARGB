@@ -1,0 +1,5 @@
+raw/
+generated/
+script/**/__pycache__/
+script/**/.pytest_cache/
+script/.env

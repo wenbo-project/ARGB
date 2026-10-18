@@ -53,7 +53,7 @@ Reasoning graphs are not inherently subject to an acyclicity constraint. To simp
 
 Each normalized graph records its source dataset. Each node contains an identifier, an execution prompt, and a CPU/GPU resource label. Each edge specifies its source and destination node identifiers.
 
-The released graphs and matching resource files are organized under `ARGB-R/`. See the [ARGB-R dataset details](ARGB-R/docs/DETAILS.md) for dataset-specific sources and conversions, release statistics, loading instructions, resource semantics, and file integrity information. Read ToolBench shards in the order listed in `dags.index.json` and keep each graph file with its matching `resources.json`.
+The released graphs and matching resource files are organized under `ARGB-R/datasets/`. See the [ARGB-R dataset details](ARGB-R/docs/DETAILS.md) for dataset sources, conversion setup and commands, release statistics, loading instructions, resource semantics, and file integrity information. The conversion entry point is [`ARGB-R/script/convert_dag.py`](ARGB-R/script/convert_dag.py), with supporting modules under `ARGB-R/script/src/`. Read ToolBench shards in the order listed in `dags.index.json` and keep each graph file with its matching `resources.json`.
 
 ## ARGB-S: Synthetic Dataset
 
@@ -117,7 +117,7 @@ Packaged presets, custom TOML files, parameter overrides, and the `gpu_ratio` se
 
 ## Documentation
 
-- [ARGB-R dataset details](ARGB-R/docs/DETAILS.md): source-specific conversion details, release inventory, data loading, resource semantics, and integrity information.
+- [ARGB-R dataset details](ARGB-R/docs/DETAILS.md): conversion setup and commands, source-specific details, release inventory, data loading, resource semantics, and integrity information.
 - [ARGB-S configuration guide](ARGB-S/docs/configuration.md): presets, all parameters, sampling rules, and how graph shape controls interact.
 - [ARGB-S technical reference](ARGB-S/docs/reference.md): generation steps, JSON format, public API, batch defaults, and streaming export.
 

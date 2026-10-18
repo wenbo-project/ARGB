@@ -1,0 +1,107 @@
+{
+  "schema_version": 1,
+  "version": "1.1.0",
+  "release_date": "2026-10-16",
+  "paper_statistics": {
+    "dags": 55372,
+    "nodes": 303549,
+    "edges": 302759,
+    "mean_nodes_per_dag": 5.4819945099,
+    "node_count_population_std": 2.7258459924,
+    "mean_depth": 4.4214765585,
+    "depth_population_std": 2.5807957602,
+    "gpu_nodes": 145164,
+    "cpu_nodes": 158385
+  },
+  "datasets": [
+    {
+      "name": "strategyqa",
+      "dag_file": "ARGB-R/strategyqa/dags.json",
+      "resource_estimate_file": "ARGB-R/strategyqa/resources.json",
+      "dags": 2061,
+      "nodes": 7642,
+      "edges": 6090,
+      "average_depth": 2.6744298884,
+      "gpu_nodes": 5623,
+      "cpu_nodes": 2019,
+      "resource_profile": "local_sim_v2",
+      "source_split": "train",
+      "selection": "full frozen conversion",
+      "sha256": {
+        "dag_file": "55a7731a382c6dc8755a8efd931e0df25e3ab814a6da9064b02122c09e028c78",
+        "resource_estimate_file": "0b2dffc2d34dff04075caf20ea1d50deccabd6215ddf792078085de2dbf9320b"
+      },
+      "dag_fingerprint_sha256": "55a7731a382c6dc8755a8efd931e0df25e3ab814a6da9064b02122c09e028c78"
+    },
+    {
+      "name": "musique",
+      "dag_file": "ARGB-R/musique/dags.json",
+      "resource_estimate_file": "ARGB-R/musique/resources.json",
+      "dags": 19938,
+      "nodes": 95044,
+      "edges": 85668,
+      "average_depth": 4.2471160598,
+      "gpu_nodes": 54497,
+      "cpu_nodes": 40547,
+      "resource_profile": "local_sim_v2",
+      "source_split": "train",
+      "selection": "full frozen conversion",
+      "sha256": {
+        "dag_file": "677ab434e8436b37c0abfba4f07deaa3b4847b71ae9b4841b4b513f0aef13aa5",
+        "resource_estimate_file": "c1d2bd20aec8e856cb27a7103538c9d397c0d1eeca4a7da3d3b579ffbd504c48"
+      },
+      "dag_fingerprint_sha256": "677ab434e8436b37c0abfba4f07deaa3b4847b71ae9b4841b4b513f0aef13aa5"
+    },
+    {
+      "name": "toolbench",
+      "dag_file": "ARGB-R/toolbench/dags.index.json",
+      "resource_estimate_file": "ARGB-R/toolbench/resources.json",
+      "dags": 26999,
+      "nodes": 124408,
+      "edges": 131936,
+      "average_depth": 3.2027482499,
+      "gpu_nodes": 51136,
+      "cpu_nodes": 73272,
+      "resource_profile": "local_sim_v2",
+      "source_split": "train",
+      "selection": "full merged LLM conversion used by the paper",
+      "sha256": {
+        "dag_file": "37d0037c0feae1f541f140ae8faa718923889282697becd5a113be5e1dc4b5ff",
+        "resource_estimate_file": "fa543b3249a13ae2ff0d186eca4fecb2d42b625d22b7ca75b00385b8cc0bbfab"
+      },
+      "dag_shards": [
+        {
+          "path": "ARGB-R/toolbench/dags-00001-of-00002.json",
+          "sha256": "02088f16642244218224107ee7df048848520338088188e19e5fdbb38bffaf16",
+          "dags": 13500
+        },
+        {
+          "path": "ARGB-R/toolbench/dags-00002-of-00002.json",
+          "sha256": "f3f3213538dcd9e4ea9beb8d84c0cc242ecfde497c865952010c8579693d2cec",
+          "dags": 13499
+        }
+      ],
+      "dag_fingerprint_sha256": "89dabffc17ee259be5396b4a32a1ae0eb3e7dbe9de0c776fb1f735267ad3b93b"
+    },
+    {
+      "name": "alfworld",
+      "dag_file": "ARGB-R/alfworld/dags.json",
+      "resource_estimate_file": "ARGB-R/alfworld/resources.json",
+      "dags": 6374,
+      "nodes": 76455,
+      "edges": 79065,
+      "average_depth": 10.694069658,
+      "gpu_nodes": 33908,
+      "cpu_nodes": 42547,
+      "resource_profile": "local_sim_v2",
+      "source_split": "train",
+      "selection": "full LLM conversion used by the paper",
+      "sha256": {
+        "dag_file": "387ce4a91c107cd36d26f2b9b1714a4d7cd1b62b0cff44f6d85d1ab7a7dba3e9",
+        "resource_estimate_file": "d2c72cb80388fed14b094614a29e1e56851a4d4208c916c20b1201921dfa6587"
+      },
+      "dag_fingerprint_sha256": "387ce4a91c107cd36d26f2b9b1714a4d7cd1b62b0cff44f6d85d1ab7a7dba3e9"
+    }
+  ],
+  "release_notes": "ARGB-R packaging of frozen release 1.1.0. Graph and resource files are preserved byte for byte, including historical schema identifiers and provenance metadata. Manifest paths are relative to the ARGB repository root under ARGB-R/. ToolBench retains two ordered JSON arrays. No conversion or resource estimation was rerun."
+}
